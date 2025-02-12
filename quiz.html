@@ -15,7 +15,10 @@
 <body>
     <div class="container">
         <h1>Quiz</h1>
-        <div id="quiz">
+        <div id="menu">
+            <button id="start">Iniciar Quiz</button>
+        </div>
+        <div id="quiz" class="hidden">
             <div id="question" class="question"></div>
             <div id="options" class="options"></div>
             <button id="next" class="hidden">Próxima</button>
@@ -25,13 +28,19 @@
     
     <script>
         const questions = [
-            { question: "Assinale a alternativa na qual o segmento destacado exerce a função de adjetivo.", options: ["a) “Senhor futuro ministro da Saúde, queremos tratar de um motivo de orgulho", "b) “Graças aos esforços de cidadãos e governos de diversos partidos (...).”", "c) “(...) diante de uma epidemia que se aproxima de um milhão de casos (....)”."], answer: 1 },
+            { question: "Qual é a capital do Brasil?", options: ["Rio de Janeiro", "Brasília", "São Paulo"], answer: 1 },
             { question: "Quanto é 2 + 2?", options: ["3", "4", "5"], answer: 1 },
             { question: "Qual é a cor do céu?", options: ["Verde", "Azul", "Vermelho"], answer: 1 }
         ];
         
         let currentQuestion = 0;
         let score = 0;
+
+        document.getElementById("start").onclick = function() {
+            document.getElementById("menu").classList.add("hidden");
+            document.getElementById("quiz").classList.remove("hidden");
+            showQuestion();
+        };
 
         function showQuestion() {
             const q = questions[currentQuestion];
@@ -70,8 +79,6 @@
                 document.getElementById("result").classList.remove("hidden");
             }
         };
-        
-        showQuestion();
     </script>
 </body>
 </html>
