@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Simples</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 500px; margin: auto; padding: 20px; }
+        .question { font-size: 20px; margin-bottom: 10px; }
+        .options button { display: block; width: 100%; margin: 5px 0; padding: 10px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz</h1>
+        <div id="quiz">
+            <div id="question" class="question"></div>
+            <div id="options" class="options"></div>
+            <button id="next" class="hidden">Próxima</button>
+        </div>
+        <div id="result" class="hidden"></div>
+    </div>
+    
+    <script>
+        const questions = [
+            { question: "Qual é a capital do Brasil?", options: ["Rio de Janeiro", "Brasília", "São Paulo"], answer: 1 },
+            { question: "Quanto é 2 + 2?", options: ["3", "4", "5"], answer: 1 },
+            { question: "Qual é a cor do céu?", options: ["Verde", "Azul", "Vermelho"], answer: 1 }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById("question").textContent = q.question;
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            q.options.forEach((option, index) => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                optionsDiv.appendChild(button);
+            });
+            
+            document.getElementById("next").classList.add("hidden");
+        }
+
+        function checkAnswer(index) {
+            const q = questions[currentQuestion];
+            if (index === q.answer) {
+                score++;
+                alert("Correto!");
+            } else {
+                alert("Errado!");
+            }
+            document.getElementById("next").classList.remove("hidden");
+        }
+
+        document.getElementById("next").onclick = function() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                document.getElementById("quiz").classList.add("hidden");
+                document.getElementById("result").textContent = `Você acertou ${score} de ${questions.length}!`;
+                document.getElementById("result").classList.remove("hidden");
+            }
+        };
+        
+        showQuestion();
+    </script>
+</body>
+</html>
