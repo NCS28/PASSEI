@@ -8,8 +8,10 @@
         body { font-family: Arial, sans-serif; text-align: center; }
         .container { max-width: 500px; margin: auto; padding: 20px; }
         .question { font-size: 20px; margin-bottom: 10px; }
-        .options button { display: block; width: 100%; margin: 5px 0; padding: 10px; }
+        .options button { display: block; width: 100%; margin: 5px 0; padding: 10px; border: none; cursor: pointer; }
         .hidden { display: none; }
+        .correct { background-color: green; color: white; }
+        .incorrect { background-color: red; color: white; }
     </style>
 </head>
 <body>
@@ -51,21 +53,22 @@
             q.options.forEach((option, index) => {
                 const button = document.createElement("button");
                 button.textContent = option;
-                button.onclick = () => checkAnswer(index);
+                button.onclick = () => checkAnswer(button, index);
                 optionsDiv.appendChild(button);
             });
             
             document.getElementById("next").classList.add("hidden");
         }
 
-        function checkAnswer(index) {
+        function checkAnswer(button, index) {
             const q = questions[currentQuestion];
             if (index === q.answer) {
                 score++;
-                alert("Correto!");
+                button.classList.add("correct");
             } else {
-                alert("Errado!");
+                button.classList.add("incorrect");
             }
+            document.querySelectorAll(".options button").forEach(btn => btn.disabled = true);
             document.getElementById("next").classList.remove("hidden");
         }
 
